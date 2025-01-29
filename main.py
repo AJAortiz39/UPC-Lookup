@@ -19,14 +19,16 @@ def main():
     }
     resp = requests.get('https://api.upcitemdb.com/prod//trial/lookup?upc=' + user_upc, headers=headers) #inputting user's desired UPC into the request
     data = json.loads(resp.text) # Formatting the request into a data object then assigning values to each variable
-    for item in data['items']:
-        upc = item['upc']
-        product = item['title']
-        brand_name = item['brand']
-        model = item['model']
-        color = item['color']
-        lowest_price = item['lowest_recorded_price']
-        for offer in item['offers']:
+    item_details = [item for item in data['items']] # Use list comprehension to create a list of the item's details
+    # Loop through the list item_details to assign appropriate values to each field
+    for detail in item_details:
+        upc = detail['upc']
+        product = detail['title']
+        brand_name = detail['brand']
+        model = detail['model']
+        color = detail['color']
+        lowest_price = detail['lowest_recorded_price']
+        for offer in detail['offers']:
             product_link = offer['link']
     
     #Print out information
